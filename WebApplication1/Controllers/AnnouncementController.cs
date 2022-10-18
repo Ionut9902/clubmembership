@@ -28,7 +28,7 @@ namespace WebApplication1.Controllers
         // GET: AnnouncementController/Create
         public ActionResult Create()
         {
-            return View();
+            return View("Create");
         }
 
         // POST: AnnouncementController/Create
@@ -45,11 +45,11 @@ namespace WebApplication1.Controllers
                 {
                     announcementRepository.InsertAnnouncement(model);
                 }
-                return View("CreateAnnouncement");
+                return View("Create");
             }
             catch
             {
-                return View("CreateAnnouncement");
+                return View("Create");
             }
         }
 

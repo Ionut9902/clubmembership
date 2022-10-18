@@ -57,7 +57,7 @@ namespace WebApplication1.Models.Repository
         public void InsertMembershipType(MembershipTypeModel model)
         {
             model.IdMembershipType = Guid.NewGuid();
-            _DBContext.Members.Add(MapModelToDBObject(model));
+            _DBContext.MembershipTypes.Add(MapModelToDBObject(model));
             _DBContext.SaveChanges();
         }
 
@@ -78,9 +78,15 @@ namespace WebApplication1.Models.Repository
 
         public void DeleteMembershipType(MembershipTypeModel model)
         {
-            var dbobject = _DBContext.MembershipType.FirstOrDefault(x => x.IdMembershipType == model.IdMembershipType);
+            var dbobject = _DBContext.MembershipTypes.FirstOrDefault(x => x.IdMembershipType == model.IdMembershipType);
             if(dbobject != null)
             {
+                var memberships = _DBContext.Memberships.Where(X => X.IdMembershipType == dbobject.IdMembershipType);
+                foreach (var membership in memberships)
+                {
+                    _DBContext.Memberships.Remove(membership);
+
+                }
                 _DBContext.MembershipTypes.Remove(dbobject);
                 _DBContext.SaveChanges();
             }

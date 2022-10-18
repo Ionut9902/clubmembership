@@ -54,7 +54,7 @@ namespace WebApplication1.Models.Repository
 
         public MemberModel GetMemberByID(Guid id)
         {
-            return MapDBObjectToModel(_DBContext.Members.FirstOrDefault(x => x.IdMembers == id));
+            return MapDBObjectToModel(_DBContext.Members.FirstOrDefault(x => x.IdMember == id));
         }
 
         public void InsertMember(MemberModel model)
