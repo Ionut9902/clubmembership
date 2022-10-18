@@ -7,8 +7,8 @@ namespace WebApplication1.Models.Repository
 {
     public class CodeSnippetRepository
     {
-         private readonly CodeSnippetDbContext _DBContext;
-        public CodeSnippetRepository(CodeSnippetDbContext dBContext)
+         private readonly ApplicationDbContext _DBContext;
+        public CodeSnippetRepository(ApplicationDbContext dBContext)
         {
             _DBContext = dBContext;
         }
@@ -17,7 +17,7 @@ namespace WebApplication1.Models.Repository
             var model = new CodeSnippetModel();
             if(dbobject != null)
             {
-                model.IdCodeSnippet = dbobject.IdAnnouncement;
+                model.IdCodeSnippet = dbobject.IdCodeSnippet;
                 model.Title = dbobject.Title;
                 model.ContentCode = dbobject.ContentCode;
                 model.IdMember = dbobject.IdMember;
@@ -34,7 +34,7 @@ namespace WebApplication1.Models.Repository
             var dbobject = new CodeSnippet();
             if (dbobject != null)
             {
-                dbobject.IdCodeSnippet = model.IdAnnouncement;
+                dbobject.IdCodeSnippet = model.IdCodeSnippet;
                 dbobject.Title = model.Title;
                 dbobject.ContentCode = model.ContentCode;
                 dbobject.IdMember = model.IdMember;
@@ -64,7 +64,7 @@ namespace WebApplication1.Models.Repository
         public void InsertCodeSnippet(CodeSnippetModel model)
         {
             model.IdCodeSnippet = Guid.NewGuid();
-            _DBContext.Annoucements.Add(MapModelToDBObject(model));
+            _DBContext.CodeSnippets.Add(MapModelToDBObject(model));
             _DBContext.SaveChanges();
         }
 
@@ -73,7 +73,7 @@ namespace WebApplication1.Models.Repository
             var dbobject = _DBContext.CodeSnippets.FirstOrDefault(x => x.IdCodeSnippet == model.IdCodeSnippet);
             if(dbobject != null)
             {
-                dbobject.IdCodeSnippet = model.IdAnnouncement;
+                dbobject.IdCodeSnippet = model.IdCodeSnippet;
                 dbobject.Title = model.Title;
                 dbobject.ContentCode = model.ContentCode;
                 dbobject.IdMember = model.IdMember;
@@ -89,7 +89,7 @@ namespace WebApplication1.Models.Repository
 
         public void DeleteCodeSnippet(CodeSnippetModel model)
         {
-            var dbobject = _DBContext.CodeSnippet.FirstOrDefault(x => x.IdCodeSnippet == model.IdCodeSnippet);
+            var dbobject = _DBContext.CodeSnippets.FirstOrDefault(x => x.IdCodeSnippet == model.IdCodeSnippet);
             if(dbobject != null)
             {
                 _DBContext.CodeSnippets.Remove(dbobject);

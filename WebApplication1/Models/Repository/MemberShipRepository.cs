@@ -22,7 +22,7 @@ namespace WebApplication1.Models.Repository
                 model.IdMember = dbobject.IdMember;
                 model.IdMembershipType = dbobject.IdMembershipType;
                 model.StartDate = dbobject.StartDate;
-                model.EndDate = dbobject.EndDate:
+                model.EndDate = dbobject.EndDate;
                 model.Level = dbobject.Level;
             }
             return model;
@@ -38,7 +38,7 @@ namespace WebApplication1.Models.Repository
                 dbobject.IdMember = model.IdMember;
                 dbobject.IdMembershipType = model.IdMembershipType;
                 dbobject.StartDate = model.StartDate;
-                dbobject.EndDate = model.EndDate:
+                dbobject.EndDate = model.EndDate;
                 dbobject.Level = model.Level;
             }
             return dbobject;
@@ -62,7 +62,7 @@ namespace WebApplication1.Models.Repository
         public void InsertMembership(MembershipModel model)
         {
             model.IdMembership = Guid.NewGuid();
-            _DBContext.Members.Add(MapModelToDBObject(model));
+            _DBContext.Memberships.Add(MapModelToDBObject(model));
             _DBContext.SaveChanges();
         }
 
@@ -76,7 +76,7 @@ namespace WebApplication1.Models.Repository
                 dbobject.IdMember = model.IdMember;
                 dbobject.IdMembershipType = model.IdMembershipType;
                 dbobject.StartDate = model.StartDate;
-                dbobject.EndDate = model.EndDate:
+                dbobject.EndDate = model.EndDate;
                 dbobject.Level = model.Level;
                 _DBContext.SaveChanges();
             }
@@ -86,7 +86,7 @@ namespace WebApplication1.Models.Repository
 
         public void DeleteMembership(MembershipModel model)
         {
-            var dbobject = _DBContext.Membership.FirstOrDefault(x => x.IdMembership == model.IdMembership);
+            var dbobject = _DBContext.Memberships.FirstOrDefault(x => x.IdMembership == model.IdMembership);
             if(dbobject != null)
             {
                 _DBContext.Memberships.Remove(dbobject);
