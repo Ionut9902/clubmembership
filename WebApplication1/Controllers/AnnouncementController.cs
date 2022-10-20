@@ -16,13 +16,15 @@ namespace WebApplication1.Controllers
         // GET: AnnouncementController
         public ActionResult Index()
         {
-            return View();
+          var list =   announcementRepository.GetAllAnnouncements();
+            return View(list);
         }
 
         // GET: AnnouncementController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(Guid id)
         {
-            return View();
+            var model = announcementRepository.GetAnnouncementByID(id);
+            return View("Details", model);
         }
 
         // GET: AnnouncementController/Create
@@ -45,7 +47,7 @@ namespace WebApplication1.Controllers
                 {
                     announcementRepository.InsertAnnouncement(model);
                 }
-                return View("Create");
+                return RedirectToAction("Index");
             }
             catch
             {
@@ -54,19 +56,28 @@ namespace WebApplication1.Controllers
         }
 
         // GET: AnnouncementController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(Guid id)
         {
-            return View();
+            var model = announcementRepository.GetAnnouncementByID(id);
+            return View("Edit", model);
         }
 
         // POST: AnnouncementController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Guid id, IFormCollection collection)
         {
             try
             {
+                var model = new AnnouncementModel();
+                var task = TryUpdateModelAsync(model);
+                task.Wait();
+                if (task.Result)
+                {
+                    announcementRepository.UpdateAnnouncement(model);
+                }
                 return RedirectToAction(nameof(Index));
+
             }
             catch
             {
@@ -75,23 +86,25 @@ namespace WebApplication1.Controllers
         }
 
         // GET: AnnouncementController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
-            return View();
+            var model = announcementRepository.GetAnnouncementByID(id);
+            return View("Delete", model);
         }
 
         // POST: AnnouncementController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Guid id, IFormCollection collection)
         {
             try
             {
+                announcementRepository.DeleteAnnouncement(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return RedirectToAction("Delete", id);
             }
         }
     }

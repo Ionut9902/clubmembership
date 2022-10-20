@@ -84,9 +84,9 @@ namespace WebApplication1.Models.Repository
             
         }
 
-        public void DeleteAnnouncement(AnnouncementModel model)
+        public void DeleteAnnouncement(Guid id)
         {
-            var dbobject = _DBContext.Annoucements.FirstOrDefault(x => x.IdAnnouncement == model.IdAnnouncement);
+            var dbobject = _DBContext.Annoucements.FirstOrDefault(x => x.IdAnnouncement == id);
             if(dbobject != null)
             {
                 _DBContext.Annoucements.Remove(dbobject);
